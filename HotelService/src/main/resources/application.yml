@@ -1,0 +1,14 @@
+server:
+  port: 7001
+
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    username: root
+    password: shashwat
+    url: jdbc:mysql://localhost:3306/hotelmicroservices
+
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: update
