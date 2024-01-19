@@ -1,19 +1,23 @@
-package com.hotelrating.userservice.Entity;
+package com.hotelrating.ratingservice.Entity;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+@Entity
 @Getter
 @Setter
-@NoArgsConstructor
 @AllArgsConstructor
+@NoArgsConstructor
+@Table(name = "User_rating")
+public class Rating extends BaseEntity{
 
-public class Rating {
-    private String ratingID;
     private String userID;
     private String hotelID;
     private int rating;
     private String remark;
+
 }

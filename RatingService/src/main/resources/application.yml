@@ -1,0 +1,17 @@
+server:
+  port: 7002
+
+
+spring:
+  data:
+  datasource:
+    url: jdbc:mysql://localhost:3306/ratingmicroservices
+    username: root
+    password: shashwat
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
