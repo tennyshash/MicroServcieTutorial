@@ -3,7 +3,6 @@ server:
 
 
 spring:
-  data:
   datasource:
     url: jdbc:mysql://localhost:3306/ratingmicroservices
     username: root
@@ -15,3 +14,14 @@ spring:
     hibernate:
       ddl-auto: update
     show-sql: true
+  application:
+    name: Rating-Service
+
+eureka:
+  instance:
+    prefer-ip-address: true
+  client:
+    register-with-eureka: true
+    fetch-registry: true
+    service-url:
+      defaultZone: http://localhost:7003/eureka
