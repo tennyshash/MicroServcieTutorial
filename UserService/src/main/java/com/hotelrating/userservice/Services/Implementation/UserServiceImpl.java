@@ -13,6 +13,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -40,16 +41,35 @@ public class UserServiceImpl implements UserService {
     @Override
     public List<User> getAllUser() {
         List<User> users=userRepository.findAll();
-        // fetching rating of user from rating service
-        //http://localhost:7002/ratings/getAllByUserID/ + userID
 
-        for(User user : users){
-            Rating [] usersRating=restTemplate.getForObject("http://localhost:7002/ratings/getAllByUserID/"+user.getID(), Rating[].class);
-            logger.info("{}",usersRating);
-            List<Rating> usersRatingList= Arrays.stream(usersRating).toList();
-            user.setRating(usersRatingList);
-        }
-        return users;
+        List<User>userList=users.stream().map( user -> {
+
+            // fetching rating of user from rating service
+            //http://localhost:7002/ratings/getAllByUserID/ + userID
+
+            Rating [] userRating=restTemplate.getForObject("http://localhost:7002/ratings/getAllByUserID/"+user.getID(),Rating[].class);
+            logger.info("{}" , userRating);
+            List<Rating> ratings= Arrays.stream(userRating).toList();
+
+            List<Rating> ratingsListWithHotel=ratings.stream().map( rating -> {
+                // Api to call hotel services to get hotel
+                //http://localhost:7001/hotels/get/
+
+                ResponseEntity<Hotel> hotelEntity=restTemplate.getForEntity("http://localhost:7001/hotels/get/"+rating.getHotelID(), Hotel.class);
+                Hotel newHotel=hotelEntity.getBody();
+                logger.info(" status code : {}", hotelEntity.getStatusCode() );
+
+                rating.setHotel(newHotel);
+                return  rating;
+
+            }).collect(Collectors.toList());
+
+            user.setRating(ratingsListWithHotel);
+            return user;
+
+        }).collect(Collectors.toList());
+
+        return userList;
     }
 
     @Override
