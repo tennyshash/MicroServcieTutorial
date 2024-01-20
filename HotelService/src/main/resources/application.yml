@@ -2,6 +2,8 @@ server:
   port: 7001
 
 spring:
+  application:
+    name: Hotel-Service
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     username: root
@@ -12,3 +14,11 @@ spring:
     show-sql: true
     hibernate:
       ddl-auto: update
+eureka:
+  instance:
+    prefer-ip-address: true
+  client:
+    service-url:
+      defaultZone: http://localhost:7003/eureka
+    fetch-registry: true
+    register-with-eureka: true
