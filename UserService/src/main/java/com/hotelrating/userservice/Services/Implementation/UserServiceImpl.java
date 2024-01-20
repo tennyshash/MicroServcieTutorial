@@ -47,7 +47,7 @@ public class UserServiceImpl implements UserService {
             // fetching rating of user from rating service
             //http://localhost:7002/ratings/getAllByUserID/ + userID
 
-            Rating [] userRating=restTemplate.getForObject("http://localhost:7002/ratings/getAllByUserID/"+user.getID(),Rating[].class);
+            Rating [] userRating=restTemplate.getForObject("http://RATING-SERVICE/ratings/getAllByUserID/"+user.getID(),Rating[].class);
             logger.info("{}" , userRating);
             List<Rating> ratings= Arrays.stream(userRating).toList();
 
@@ -55,7 +55,7 @@ public class UserServiceImpl implements UserService {
                 // Api to call hotel services to get hotel
                 //http://localhost:7001/hotels/get/
 
-                ResponseEntity<Hotel> hotelEntity=restTemplate.getForEntity("http://localhost:7001/hotels/get/"+rating.getHotelID(), Hotel.class);
+                ResponseEntity<Hotel> hotelEntity=restTemplate.getForEntity("http://HOTEL-SERVICE/hotels/get/"+rating.getHotelID(), Hotel.class);
                 Hotel newHotel=hotelEntity.getBody();
                 logger.info(" status code : {}", hotelEntity.getStatusCode() );
 
@@ -81,14 +81,14 @@ public class UserServiceImpl implements UserService {
         // fetching rating of user from rating service
         //http://localhost:7002/ratings/getAllByUserID/ + userID
 
-        Rating [] usersRating=restTemplate.getForObject("http://localhost:7002/ratings/getAllByUserID/"+user.getID(), Rating[].class);
+        Rating [] usersRating=restTemplate.getForObject("http://RATING-SERVICE/ratings/getAllByUserID/"+user.getID(), Rating[].class);
         logger.info("{}",usersRating);
         List<Rating> usersRatingList= Arrays.stream(usersRating).toList();
 
         List<Rating> ratings=usersRatingList.stream().map( rating-> {
             // Api to call hotel services to get hotel
             //http://localhost:7001/hotels/get/
-            ResponseEntity<Hotel> hotelEntity =restTemplate.getForEntity("http://localhost:7001/hotels/get/"+rating.getHotelID(), Hotel.class);
+            ResponseEntity<Hotel> hotelEntity =restTemplate.getForEntity("http://HOTEL-SERVICE/hotels/get/"+rating.getHotelID(), Hotel.class);
             Hotel hotel=hotelEntity.getBody();
             logger.info("status code : {}",hotelEntity.getStatusCode());
 
