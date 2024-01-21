@@ -60,7 +60,9 @@ public class UserServiceImpl implements UserService {
             logger.info("{}" , userRating);
             List<Rating> ratings= Arrays.stream(userRating).toList(); */
             //       ->>>>>>>Using FEIGN CLIENT
-            List<Rating> ratingList=ratingServiceFeign.getRatingByUser(user.getID());
+            ResponseEntity<List<Rating>> ratingListResponseEntity=ratingServiceFeign.getRatingByUser(user.getID());
+            List<Rating> ratingList=ratingListResponseEntity.getBody();
+            logger.info("code: ", ratingListResponseEntity.getStatusCode());
 
             List<Rating> ratingsListWithHotel=ratingList.stream().map( rating -> {
                 // Api to call hotel services to get hotel

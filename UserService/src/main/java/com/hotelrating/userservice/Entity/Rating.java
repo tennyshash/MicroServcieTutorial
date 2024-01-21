@@ -1,15 +1,12 @@
 package com.hotelrating.userservice.Entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-
+@Builder
 public class Rating {
     private String id;
     private String userID;
