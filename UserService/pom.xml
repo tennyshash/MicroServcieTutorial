@@ -46,6 +46,11 @@
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
         </dependency>
+                                <!--   FEIGN CLIENT Dependency comes under spring cloud. -->
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-openfeign</artifactId>
+        </dependency>
         <!--  These are dependency to register as client in spring registry  -->
 <!--        <dependency>-->
 <!--            <groupId>org.springframework.cloud</groupId>-->

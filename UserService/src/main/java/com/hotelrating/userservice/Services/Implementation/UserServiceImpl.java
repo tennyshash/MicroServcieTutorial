@@ -4,6 +4,8 @@ import com.hotelrating.userservice.Entity.Hotel;
 import com.hotelrating.userservice.Entity.Rating;
 import com.hotelrating.userservice.Entity.User;
 import com.hotelrating.userservice.Exceptions.ResourceNotFoundException;
+import com.hotelrating.userservice.FeignClientServices.HotelServiceFeign;
+import com.hotelrating.userservice.FeignClientServices.RatingServiceFeign;
 import com.hotelrating.userservice.Repository.UserRepository;
 import com.hotelrating.userservice.Services.UserService;
 import org.slf4j.Logger;
@@ -25,11 +27,16 @@ public class UserServiceImpl implements UserService {
     private UserRepository userRepository;
     private RestTemplate restTemplate;
     private Logger logger= LoggerFactory.getLogger(UserServiceImpl.class);
+    private HotelServiceFeign hotelServiceFeign;
+    private RatingServiceFeign ratingServiceFeign;
 
     @Autowired
-    public UserServiceImpl(UserRepository userRepository, RestTemplate restTemplate) {
+    public UserServiceImpl(UserRepository userRepository, RestTemplate restTemplate,
+                           HotelServiceFeign hotelServiceFeign , RatingServiceFeign ratingServiceFeign) {
         this.userRepository = userRepository;
         this.restTemplate=restTemplate;
+        this.hotelServiceFeign=hotelServiceFeign;
+        this.ratingServiceFeign=ratingServiceFeign;
     }
 
     @Override
@@ -47,19 +54,27 @@ public class UserServiceImpl implements UserService {
             // fetching rating of user from rating service
             //http://localhost:7002/ratings/getAllByUserID/ + userID
 
+            //       ->>>>>>>Using REST TEMPLATE
+            /*
             Rating [] userRating=restTemplate.getForObject("http://RATING-SERVICE/ratings/getAllByUserID/"+user.getID(),Rating[].class);
             logger.info("{}" , userRating);
-            List<Rating> ratings= Arrays.stream(userRating).toList();
+            List<Rating> ratings= Arrays.stream(userRating).toList(); */
+            //       ->>>>>>>Using FEIGN CLIENT
+            List<Rating> ratingList=ratingServiceFeign.getRatingByUser(user.getID());
 
-            List<Rating> ratingsListWithHotel=ratings.stream().map( rating -> {
+            List<Rating> ratingsListWithHotel=ratingList.stream().map( rating -> {
                 // Api to call hotel services to get hotel
                 //http://localhost:7001/hotels/get/
 
+                //       ->>>>>>>Using REST TEMPLATE
+                /*
                 ResponseEntity<Hotel> hotelEntity=restTemplate.getForEntity("http://HOTEL-SERVICE/hotels/get/"+rating.getHotelID(), Hotel.class);
                 Hotel newHotel=hotelEntity.getBody();
-                logger.info(" status code : {}", hotelEntity.getStatusCode() );
+                logger.info(" status code : {}", hotelEntity.getStatusCode() );   */
+                //       ->>>>>>>Using FEIGN CLIENT
+                Hotel hotel=hotelServiceFeign.getHotel(rating.getHotelID());
 
-                rating.setHotel(newHotel);
+                rating.setHotel(hotel);
                 return  rating;
 
             }).collect(Collectors.toList());
