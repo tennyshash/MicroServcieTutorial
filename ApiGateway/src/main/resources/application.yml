@@ -1,25 +1,35 @@
 spring:
   application:
     name: API-GATEWAY
+  # setting applicatio type to reactive as, after adding spring-boot-starter-web dependency,there is  conflict between
+  # Spring MVC & spring cloud gateway.as spring cloud gateway is reactive , so either remove dependency or add this.
+  main:
+    web-application-type: reactive
 
-  cloud:
-    gateway:
-      mvc:
-        routes:
-          - id : USER-SERVICE
-            uri: lb://USER-SERVICE
-            predicates:
-              - Path=/users/**
-
-          - id: HOTEL-SERVICE
-            uri: lb://HOTEL-SERVICE
-            predicates:
-              - Path=/hotels/**
-
-          - id: RATING-SERVICE
-            uri: lb://RATING-SERVICE
-            predicates:
-              - Path=/ratings/**
+# We can use this configuration or define in MYCONFIG class
+#  cloud:
+#    gateway:
+#      mvc:
+#        routes:
+#          - id : USER-SERVICE
+#            uri: lb://USER-SERVICE
+#            predicates:
+#              - Path=/users/**
+#
+#          - id: HOTEL-SERVICE
+#            uri: lb://HOTEL-SERVICE
+#            predicates:
+#              - Path=/hotels/**
+#
+#          - id: HOTEL-SERVICE
+#            uri: lb://HOTEL-SERVICE
+#            predicates:
+#              - Path=/staff/**
+#
+#          - id: RATING-SERVICE
+#            uri: lb://RATING-SERVICE
+#            predicates:
+#              - Path=/ratings/**
 
 server:
   port: 7004
@@ -33,3 +43,7 @@ eureka:
     service-url:
       defaultZone : http://localhost:7003/eureka
 
+#logging:
+#  level:
+#    org:
+#      springframework : DEBUG
