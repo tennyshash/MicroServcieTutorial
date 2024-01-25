@@ -1,3 +1,6 @@
+server:
+  port: 7004
+
 spring:
   application:
     name: API-GATEWAY
@@ -31,17 +34,19 @@ spring:
 #            predicates:
 #              - Path=/ratings/**
 
-server:
-  port: 7004
+  config:
+    import: optional:configserver:http://localhost:7005
 
-eureka:
-  instance:
-    prefer-ip-address: true
-  client:
-    fetch-registry: true
-    register-with-eureka: true
-    service-url:
-      defaultZone : http://localhost:7003/eureka
+#NOW we importing these configuration form CONFIG-SERVER
+
+#eureka:
+#  instance:
+#    prefer-ip-address: true
+#  client:
+#    register-with-eureka: true
+#    fetch-registry: true
+#    service-url:
+#      defaultZone : http://localhost:7003/eureka
 
 #logging:
 #  level:

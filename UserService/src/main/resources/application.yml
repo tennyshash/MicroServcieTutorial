@@ -1,8 +1,12 @@
 server:
   port: 7000
 spring:
+
   application:
     name: User-Service
+
+  profiles:
+    active: default
 
   datasource:
     url: jdbc:mysql://localhost:3306/usermicroservices
@@ -14,15 +18,23 @@ spring:
     hibernate:
       ddl-auto: update
     show-sql: true
+
+  config:
+    import: optional:configserver:http://localhost:7005
+
+
 #    properties:
 #      hibernate:
 #        dialect: org.hibernate.dialect.MySQLDialect
 
-eureka:
-  instance:
-    prefer-ip-address: true
-  client:
-    register-with-eureka: true
-    fetch-registry: true
-    service-url:
-      defaultZone : http://localhost:7003/eureka
+
+#NOW we importing these configuration form CONFIG-SERVER
+
+#eureka:
+#  instance:
+#    prefer-ip-address: true
+#  client:
+#    register-with-eureka: true
+#    fetch-registry: true
+#    service-url:
+#      defaultZone : http://localhost:7003/eureka

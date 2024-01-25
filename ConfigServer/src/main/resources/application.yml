@@ -1,0 +1,23 @@
+server:
+  port: 7005
+
+spring:
+  devtools:
+    add-properties: false
+  application:
+    name: CONFIG-SERVER
+  cloud:
+    config:
+      server:
+        git:
+          uri: https://github.com/tennyshash/MicroServcieTutorial-Configuration
+          clone-on-start: true
+
+eureka:
+  client:
+    register-with-eureka: true
+    fetch-registry: true
+    service-url:
+      defaultZone: http://localhost:7003/eureka
+  instance:
+    prefer-ip-address: true
