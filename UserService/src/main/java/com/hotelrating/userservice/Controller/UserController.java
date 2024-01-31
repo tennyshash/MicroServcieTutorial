@@ -3,6 +3,7 @@ package com.hotelrating.userservice.Controller;
 import com.hotelrating.userservice.Entity.User;
 import com.hotelrating.userservice.Services.UserService;
 import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
+import io.github.resilience4j.ratelimiter.annotation.RateLimiter;
 import io.github.resilience4j.retry.annotation.Retry;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -30,15 +31,15 @@ public class UserController {
         return  new ResponseEntity<>(newUser, HttpStatus.CREATED);
     }
 
-    int retryCount=1;
+  //  int retryCount=1;
     @GetMapping("/get/{userId}")
-    @CircuitBreaker(name = "UserRatingHotel")
-    @Retry(name = "UserRatingHotel", fallbackMethod = "UserRatingHotel")
-
+    @CircuitBreaker(name = "UserRatingHotelCircuitBreaker")
+    @Retry(name = "UserRatingHotelRetry", fallbackMethod = "userRatingHotelFallBack")
+    @RateLimiter(name = "UserRatingHotelRateLimiter", fallbackMethod = "userRatingHotelFallBack")
     public ResponseEntity<User> getUserByID(@PathVariable(value = "userId") String userID){
-        //just displaying count for testing  and visualising
-        logger.info("retry Count : {}" , retryCount);
-        retryCount++;
+//        just displaying count for testing  and visualising
+//        logger.info("retry Count : {}" , retryCount);
+//        retryCount++;
 
         User user= userService.getUserByID(userID);
         return new ResponseEntity<>(user,HttpStatus.OK);
@@ -46,7 +47,7 @@ public class UserController {
 
     // Call Back Method for CIRCUIT-BREAKER
 
-    public ResponseEntity<User>  UserRatingHotel(String userID, Exception exception){
+    public ResponseEntity<User>  userRatingHotelFallBack(String userID, Exception exception){
         //logger.info("Fall back is executed because service is down :", exception.getMessage());
         User user= User.builder()
                 .About("Fall Back Method is executed.")

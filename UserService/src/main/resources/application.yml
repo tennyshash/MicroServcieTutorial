@@ -44,6 +44,7 @@ management:
   health:
     circuitbreakers:
       enabled: true
+
   endpoints:
     web:
       exposure:
@@ -53,16 +54,25 @@ management:
       show-details: always
 
 resilience4j:
+  ratelimiter:
+    instances:
+      UserRatingHotelRateLimiter:
+        register-health-indicator: false
+        timeout-duration:
+          seconds: 0
+        limit-refresh-period:
+          seconds: 10
+        limit-for-period: 2
   retry:
     instances:
-      UserRatingHotel :
+      UserRatingHotelRetry :
         max-attempts: 3
         wait-duration:
           seconds: 3
 
   circuitbreaker:
     instances:
-      UserRatingHotel:
+      UserRatingHotelCircuitBreaker:
         register-health-indicator: true
         event-consumer-buffer-size: 10
         failure-rate-threshold: 50
