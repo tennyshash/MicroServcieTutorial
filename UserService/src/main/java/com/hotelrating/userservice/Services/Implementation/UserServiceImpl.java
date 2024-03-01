@@ -59,6 +59,7 @@ public class UserServiceImpl implements UserService {
             Rating [] userRating=restTemplate.getForObject("http://RATING-SERVICE/ratings/getAllByUserID/"+user.getID(),Rating[].class);
             logger.info("{}" , userRating);
             List<Rating> ratings= Arrays.stream(userRating).toList(); */
+
             //       ->>>>>>>Using FEIGN CLIENT
             ResponseEntity<List<Rating>> ratingListResponseEntity=ratingServiceFeign.getRatingByUser(user.getID());
             List<Rating> ratingList=ratingListResponseEntity.getBody();

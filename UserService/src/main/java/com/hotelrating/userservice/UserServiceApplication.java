@@ -7,7 +7,8 @@ import org.springframework.cloud.openfeign.EnableFeignClients;
 
 @SpringBootApplication
 @EnableDiscoveryClient
-@EnableFeignClients
+@EnableFeignClients( basePackages = {"com.hotelrating.userservice.FeignClientServices" ,
+                                      "com.hotelrating.userservice.FeignClientServices"} )
 public class UserServiceApplication {
 
     public static void main(String[] args) {

@@ -37,6 +37,11 @@ spring:
   config:
     import: optional:configserver:http://localhost:7005
 
+# READ ABOUT FAIL FAST
+#  cloud:
+#    config:
+#      fail-fast: false
+
 #NOW we importing these configuration form CONFIG-SERVER
 
 #eureka:
@@ -52,3 +57,27 @@ spring:
 #  level:
 #    org:
 #      springframework : DEBUG
+
+#Okta configuration for API GATEWAY
+#okta:
+
+#  oauth2:
+#    issuer: https://dev-30011393.okta.com/oauth2/default
+#    audience: api://default
+#    client-id: 0oaet9udkgGpvIBYw5d7
+#    client-secret: H6kOPhNaj9z9NlKbwASj2KkLX4M46N8OEQla7dq0oXuno0yPVf1mqfHpGd6EqFs1
+#    scopes: openid, profile , email, offline_access
+#spring:
+
+  security:
+    oauth2:
+      client:
+        registration:
+          okta:
+            client-id: 0oaet9udkgGpvIBYw5d7
+            client-secret: H6kOPhNaj9z9NlKbwASj2KkLX4M46N8OEQla7dq0oXuno0yPVf1mqfHpGd6EqFs1
+            scope: openid, profile , email, offline_access
+        provider:
+          okta:
+            issuer-uri: https://dev-30011393.okta.com/oauth2/default
+

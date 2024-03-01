@@ -12,6 +12,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -61,5 +62,7 @@ public class UserController {
     public ResponseEntity<List<User>> getAllUsers(){
         List<User> users=userService.getAllUser();
         return ResponseEntity.ok(users);
+
     }
+
 }
