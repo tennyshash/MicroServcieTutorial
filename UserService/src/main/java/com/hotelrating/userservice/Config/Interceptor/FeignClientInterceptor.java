@@ -19,7 +19,7 @@ public class FeignClientInterceptor implements RequestInterceptor {
     public void apply(RequestTemplate requestTemplate) {
 
         OAuth2AuthorizeRequest oAuth2AuthorizeRequest=OAuth2AuthorizeRequest
-                .withClientRegistrationId("my-internal-client")
+                .withClientRegistrationId("my-internal-client") // name of the client/ our user service in Properties
                 .principal("internal")
                 .build();
 
