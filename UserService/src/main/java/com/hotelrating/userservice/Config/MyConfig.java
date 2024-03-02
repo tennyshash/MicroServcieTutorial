@@ -21,4 +21,19 @@ public class MyConfig {
     }
 
 
+    // Declaring Bean for OAuth2AuthorizedClientManager authorizedClientManager in Interceptor->FeignClientInterceptor.class
+    @Bean
+    public OAuth2AuthorizedClientManager authorizedClientManager(
+            ClientRegistrationRepository clientRegistrationRepository,
+            OAuth2AuthorizedClientRepository oAuth2AuthorizedClientRepository
+    ){
+        DefaultOAuth2AuthorizedClientManager defaultOAuth2AuthorizedClientManager= new DefaultOAuth2AuthorizedClientManager(
+                                                    clientRegistrationRepository, oAuth2AuthorizedClientRepository);
+
+        OAuth2AuthorizedClientProvider provider= OAuth2AuthorizedClientProviderBuilder.builder().clientCredentials().build();
+        defaultOAuth2AuthorizedClientManager.setAuthorizedClientProvider(provider);
+
+        return defaultOAuth2AuthorizedClientManager;
+    }
+
 }
