@@ -6,6 +6,7 @@ import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -20,18 +21,21 @@ public class HotelController {
         this.hotelService = hotelService;
     }
 
+    @PreAuthorize(" hasAuthority('Admin') " )
     @PostMapping("/register")
     public ResponseEntity<Hotel> register(@RequestBody Hotel hotel){
         Hotel registeredHotel=hotelService.register(hotel);
         return new ResponseEntity<>(registeredHotel, HttpStatus.CREATED);
     }
 
+    @PreAuthorize("hasAuthority('SCOPE_internal') || hasAuthority('Admin') " )
     @GetMapping("/getAll")
     public ResponseEntity<List<Hotel>> getAll(){
         List<Hotel> hotels=hotelService.getAll();
         return ResponseEntity.ok(hotels);
     }
 
+    @PreAuthorize("hasAuthority('SCOPE_internal')")
     @GetMapping("/get/{hotelID}")
     public ResponseEntity<Hotel> getByID(@PathVariable String hotelID){
         Hotel hotel= hotelService.getById(hotelID);

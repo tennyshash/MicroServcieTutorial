@@ -21,6 +21,13 @@ spring:
   config:
     import: optional:configserver:http://localhost:7005
 
+#Okta configuration for USER SERVICE for implementing security
+#okta:
+    oauth2:
+      issuer: https://dev-30011393.okta.com/oauth2/default
+      audience: api://default
+
+
 #NOW we importing these configuration form CONFIG-SERVER
 
 #eureka:
