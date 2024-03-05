@@ -5,12 +5,10 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.reactive.EnableWebFluxSecurity;
 import org.springframework.security.config.web.server.ServerHttpSecurity;
-import org.springframework.security.oauth2.jwt.ReactiveJwtDecoder;
-import org.springframework.security.oauth2.jwt.ReactiveJwtDecoders;
 import org.springframework.security.web.server.SecurityWebFilterChain;
 
 @Configuration
-@EnableWebFluxSecurity
+@EnableWebFluxSecurity // Because spring-cloud-starter-gateway support spring webflux.
 public class SecurityConfig {
 
     @Bean
@@ -22,9 +20,14 @@ public class SecurityConfig {
         return httpSecurity.build();
 
     }
+    /*  JWT DECODER is Used complying with @EnableWebSecurity  in compare to API Gateway where REACTIVE JWT DECODER with @EnableWebFluxSecurity */
+    /* ---->JWT Reactive Decoder & JWT Decoder are same just with Diff names Complying with Diff Annotation */
+    /* ------>We can define JWT Reactive Decoder over here or in Configuration .YML file
+
     @Bean
     public ReactiveJwtDecoder jwtDecoder() {
         return ReactiveJwtDecoders.fromIssuerLocation("https://dev-30011393.okta.com/oauth2/default");
         //      issuer-uri: https://dev-30011393.okta.com/oauth2/default
     }
+    **/
 }

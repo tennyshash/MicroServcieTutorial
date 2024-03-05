@@ -1,5 +1,8 @@
 package com.hotelrating.userservice.Config.Interceptor;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpRequest;
 import org.springframework.http.client.ClientHttpRequestExecution;
 import org.springframework.http.client.ClientHttpRequestInterceptor;
@@ -11,6 +14,7 @@ import java.io.IOException;
 
 public class RestTemplateInterceptor implements ClientHttpRequestInterceptor {
 
+    private Logger logger= LoggerFactory.getLogger(FeignClientInterceptor.class);
     private OAuth2AuthorizedClientManager authorizedClientManager;
 
     public RestTemplateInterceptor(OAuth2AuthorizedClientManager authorizedClientManager) {
@@ -29,8 +33,10 @@ public class RestTemplateInterceptor implements ClientHttpRequestInterceptor {
 
         request.getHeaders().add("Authorization" , "Bearer "+ token);
 
-        execution.execute(request, body);
+//        logger.info("Rest Template Interceptor : {} " , token);
 
-        return null;
+        ClientHttpResponse response=execution.execute(request, body);
+
+        return response;
     }
 }

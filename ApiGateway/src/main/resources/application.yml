@@ -10,6 +10,7 @@ spring:
     web-application-type: reactive
 
 # We can use this configuration or define in MYCONFIG class
+
 #  cloud:
 #    gateway:
 #      mvc:
@@ -38,6 +39,7 @@ spring:
     import: optional:configserver:http://localhost:7005
 
 # READ ABOUT FAIL FAST
+
 #  cloud:
 #    config:
 #      fail-fast: false
@@ -59,25 +61,29 @@ spring:
 #      springframework : DEBUG
 
 #Okta configuration for API GATEWAY
-#okta:
+okta:
+  oauth2:
+    issuer: https://dev-30011393.okta.com/oauth2/default
+    audience: api://default
+    client-id: 0oaet9udkgGpvIBYw5d7
+    client-secret: H6kOPhNaj9z9NlKbwASj2KkLX4M46N8OEQla7dq0oXuno0yPVf1mqfHpGd6EqFs1
+    scopes: openid, profile , email, offline_access
 
-#  oauth2:
-#    issuer: https://dev-30011393.okta.com/oauth2/default
-#    audience: api://default
-#    client-id: 0oaet9udkgGpvIBYw5d7
-#    client-secret: H6kOPhNaj9z9NlKbwASj2KkLX4M46N8OEQla7dq0oXuno0yPVf1mqfHpGd6EqFs1
-#    scopes: openid, profile , email, offline_access
+#--------------------> You can use Above Configuration or the Below one Both are same.
+
 #spring:
-
-  security:
-    oauth2:
-      client:
-        registration:
-          okta:
-            client-id: 0oaet9udkgGpvIBYw5d7
-            client-secret: H6kOPhNaj9z9NlKbwASj2KkLX4M46N8OEQla7dq0oXuno0yPVf1mqfHpGd6EqFs1
-            scope: openid, profile , email, offline_access
-        provider:
-          okta:
-            issuer-uri: https://dev-30011393.okta.com/oauth2/default
+#  security:
+#    oauth2:
+#      resourceserver: #defining a bean of type 'org.springframework.security.oauth2.jwt.ReactiveJwtDecoder' or Can be defined in Security Config class.
+#        jwt:
+#          issuer-uri: https://dev-30011393.okta.com/oauth2/default
+#      client:
+#        registration:
+#          okta:
+#            client-id: 0oaet9udkgGpvIBYw5d7
+#            client-secret: H6kOPhNaj9z9NlKbwASj2KkLX4M46N8OEQla7dq0oXuno0yPVf1mqfHpGd6EqFs1
+#            scope: openid, profile , email, offline_access
+#        provider:
+#          okta:
+#            issuer-uri: https://dev-30011393.okta.com/oauth2/default
 

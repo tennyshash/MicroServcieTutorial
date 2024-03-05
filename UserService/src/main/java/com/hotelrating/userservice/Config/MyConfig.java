@@ -43,7 +43,7 @@ public class MyConfig {
 
          restTemplate.setInterceptors(interceptors);
 
-        return new RestTemplate();
+        return restTemplate;
     }
 
 

@@ -50,6 +50,9 @@ public class UserController {
 
     public ResponseEntity<User>  userRatingHotelFallBack(String userID, Exception exception){
         //logger.info("Fall back is executed because service is down :", exception.getMessage());
+
+//        exception.printStackTrace();
+
         User user= User.builder()
                 .About("Fall Back Method is executed.")
                 .Name("Dummy USER")

@@ -22,22 +22,11 @@ spring:
   config:
     import: optional:configserver:http://localhost:7005
 
-
-#Okta configuration for USER SERVICE for implementing security
-#okta:
-    oauth2:
-      issuer: https://dev-30011393.okta.com/oauth2/default
-      audience: api://default
-      client-id: 0oaet9udkgGpvIBYw5d7
-      client-secret: H6kOPhNaj9z9NlKbwASj2KkLX4M46N8OEQla7dq0oXuno0yPVf1mqfHpGd6EqFs1
-      scopes: openid, profile , email, offline_access
-
-
 # CONFIGURATION of  USER SERVICE TO ACT as CLIENT
   security:
     oauth2:
       resourceserver:
-        jwt:
+        jwt:   # defining a bean of type 'org.springframework.security.oauth2.jwt.JwtDecoder' or can be defined in Config Class
           issuer-uri: https://dev-30011393.okta.com/oauth2/default
       client:
         registration:
@@ -47,11 +36,17 @@ spring:
             scope: internal
             client-id: 0oaet9udkgGpvIBYw5d7
             client-secret: H6kOPhNaj9z9NlKbwASj2KkLX4M46N8OEQla7dq0oXuno0yPVf1mqfHpGd6EqFs1
+        provider:
+          okta:
+            issuer-uri: https://dev-30011393.okta.com/oauth2/default
+#            token-uri: https://dev-30011393.okta.com/oauth2/default/v1/token
 
-      provider:
-        okta:
-          issuer-uri: https://dev-30011393.okta.com/oauth2/default
 
+#Okta configuration for USER SERVICE
+okta:
+  oauth2:
+    issuer: https://dev-30011393.okta.com/oauth2/default
+    audience: api://default
 
 
 #    properties:

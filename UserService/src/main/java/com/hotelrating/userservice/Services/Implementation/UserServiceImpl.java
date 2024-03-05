@@ -100,7 +100,7 @@ public class UserServiceImpl implements UserService {
         //http://localhost:7002/ratings/getAllByUserID/ + userID
 
         Rating [] usersRating=restTemplate.getForObject("http://RATING-SERVICE/ratings/getAllByUserID/"+user.getID(), Rating[].class);
-        logger.info("{}",usersRating);
+//        logger.info("{}",usersRating);
         List<Rating> usersRatingList= Arrays.stream(usersRating).toList();
 
         List<Rating> ratings=usersRatingList.stream().map( rating-> {
@@ -108,6 +108,7 @@ public class UserServiceImpl implements UserService {
             //http://localhost:7001/hotels/get/
             ResponseEntity<Hotel> hotelEntity =restTemplate.getForEntity("http://HOTEL-SERVICE/hotels/get/"+rating.getHotelID(), Hotel.class);
             Hotel hotel=hotelEntity.getBody();
+
             logger.info("status code : {}",hotelEntity.getStatusCode());
 
             rating.setHotel( hotel);

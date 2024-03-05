@@ -28,7 +28,7 @@ public class HotelController {
         return new ResponseEntity<>(registeredHotel, HttpStatus.CREATED);
     }
 
-    @PreAuthorize("hasAuthority('SCOPE_internal') || hasAuthority('Admin') " )
+    //@PreAuthorize(" hasAuthority('Admin') " )
     @GetMapping("/getAll")
     public ResponseEntity<List<Hotel>> getAll(){
         List<Hotel> hotels=hotelService.getAll();

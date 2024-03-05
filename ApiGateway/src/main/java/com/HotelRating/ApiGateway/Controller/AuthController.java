@@ -33,7 +33,7 @@ public class AuthController {
             authResponse.setUserID(user.getEmail());
             authResponse.setAccessToken(client.getAccessToken().getTokenValue());
             authResponse.setRefreshToken(client.getRefreshToken().getTokenValue());
-            authResponse.setExpiredAt(client.getAccessToken().getExpiresAt().getEpochSecond());
+            authResponse.setExpiresAt(client.getAccessToken().getExpiresAt().getEpochSecond());
 
             List<String> authorities= user.getAuthorities().stream()
                     .map( grantedAuthority -> { return grantedAuthority.getAuthority(); } ).collect(Collectors.toList()) ;

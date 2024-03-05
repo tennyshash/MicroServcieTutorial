@@ -6,8 +6,8 @@ import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.oauth2.jwt.ReactiveJwtDecoder;
-import org.springframework.security.oauth2.jwt.ReactiveJwtDecoders;
+import org.springframework.security.oauth2.jwt.JwtDecoder;
+import org.springframework.security.oauth2.jwt.JwtDecoders;
 import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
@@ -25,9 +25,13 @@ public class WebSecurityConfig {
         return http.build();
     }
 
+    /*  JWT DECODER is Used complying with @EnableWebSecurity  in compare to API Gateway where REACTIVE JWT DECODER  with @EnableWebFluxSecurity
+     * ---->JWT Reactive Decoder & JWT Decoder are same just with Diff names Complying with Diff Annotation
+     * ------>We can define JWT Decoder over here or in Configuration .YML file
+     *For Hotel service we'll use Defining in Configuration approach & for rating service we'll use defining in Config Class  */
     @Bean
-    public ReactiveJwtDecoder jwtDecoder() {
-        return ReactiveJwtDecoders.fromIssuerLocation("https://dev-30011393.okta.com/oauth2/default");
+    public JwtDecoder jwtDecoder() {
+        return JwtDecoders.fromIssuerLocation("https://dev-30011393.okta.com/oauth2/default");
         //      issuer-uri: https://dev-30011393.okta.com/oauth2/default
     }
 }
